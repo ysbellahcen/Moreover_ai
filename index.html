@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moreover.ai - The AI infrastructure open-source framework</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --bg: #08090c;
+    --bg2: #0d1017;
+    --panel: rgba(17,19,26,.82);
+    --panel2: rgba(23,26,36,.86);
+    --panel3: #0b0d13;
+    --text: #f4f6fb;
+    --muted: #8e98ad;
+    --muted2: #687184;
+    --line: rgba(255,255,255,.08);
+    --line2: #2a2f3d;
+    --red: #ff2e2e;
+    --red2: #c91010;
+    --green: #21c55d;
+    --amber: #f5b942;
+    --bad: #ff5c5c;
+    --blue: #61a5ff;
+    --radius-xl: 24px;
+    --radius-lg: 18px;
+    --shadow: 0 18px 60px rgba(0,0,0,.32);
+    --shadow-red: 0 18px 60px rgba(120,0,0,.035);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at top,
+        rgba(255,0,0,.025) 0%,
+        transparent 35%),
+        linear-gradient(
+        180deg,
+        #020202 0%,
+        #000000 45%,
+        #000000 100%);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), transparent 58%);
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 1680px;
+    margin: auto;
+    padding: 42px 5vw 56px;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 40px;
+    margin-bottom: 28px;
+    padding: 0 0 8px;
+}
+
+.eyebrow {
+    color: var(--red);
+    font-size: 13px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 6vw, 78px);
+    font-weight: 950;
+    line-height: .92;
+    letter-spacing: -.075em;
+}
+
+.hero h1 span {
+    color: var(--red);
+    text-shadow: 0 0 34px rgba(255,46,46,.22);
+}
+
+.hero p {
+    color: var(--muted);
+    margin-top: 18px;
+    font-size: 17px;
+    max-width: 860px;
+    line-height: 1.58;
+}
+
+.status {
+    color: var(--muted2);
+    font-size: 13px;
+    margin-top: 14px;
+}
+
+.trust-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.trust-badge {
+    font-size: 12px;
+    color: #cdd5e7;
+    border: 1px solid var(--line);
+    background: rgba(12,14,20,.72);
+    padding: 8px 10px;
+    border-radius: 999px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.18);
+}
+
+.topbar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 18px 0 22px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    background: rgba(17,19,26,.58);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow);
+}
+
+.input {
+    background: #0b0d13;
+    border: 1px solid var(--line2);
+    color: var(--text);
+    padding: 13px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 650;
+    min-width: 220px;
+    max-width: 420px;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.input:focus {
+    border-color: rgba(255,46,46,.62);
+    box-shadow: 0 0 0 4px rgba(255,46,46,.10);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: 21px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(14px);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.045), transparent 45%);
+    pointer-events: none;
+}
+
+.card .label {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .10em;
+    font-weight: 900;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.card .value {
+    font-size: 36px;
+    font-weight: 950;
+    letter-spacing: -.055em;
+    position: relative;
+    z-index: 1;
+}
+
+.sizing-panel {
+    background:
+        linear-gradient(180deg, rgba(23,26,36,.92), rgba(11,13,19,.92)),
+        radial-gradient(circle at top, rgba(255,0,0,0.015), transparent 55%);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 28px;
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow), var(--shadow-red);
+    backdrop-filter: blur(16px);
+}
+
+.sizing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.sizing-header h2 {
+    font-size: 24px;
+    line-height: 1.05;
+    letter-spacing: -.045em;
+    font-weight: 950;
+}
+
+.sizing-header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 8px;
+    max-width: 760px;
+    line-height: 1.5;
+}
+
+.sizing-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.sizing-note {
+    margin-top: 13px;
+    color: var(--muted2);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.context-field {
+    min-width: 260px;
+    max-width: 360px;
+}
+
+.context-examples {
+    margin-top: 10px;
+    color: var(--muted2);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.context-examples strong {
+    color: #cdd5e7;
+    font-weight: 800;
+}
+
+.table-wrap {
+    background: rgba(17,19,26,.72);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    overflow: auto;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(14px);
+}
+
+table {
+    width: 100%;
+    min-width: 980px;
+    border-collapse: collapse;
+}
+
+thead {
+    background: rgba(12,14,20,.96);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+th {
+    text-align: left;
+    padding: 17px 20px;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .11em;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    white-space: nowrap;
+    font-weight: 900;
+}
+
+td {
+    padding: 17px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.055);
+    font-size: 14px;
+    color: #dbe1ee;
+    vertical-align: top;
+}
+
+tr {
+    transition: background .18s ease, box-shadow .18s ease;
+}
+
+tr:hover {
+    background: rgba(255,255,255,.035);
+}
+
+.clickable-model {
+    cursor: pointer;
+}
+
+.clickable-model:hover {
+    color: #ff7878;
+}
+
+.badge,
+.fit-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.open,
+.fit-ok {
+    background: rgba(33,197,93,.12);
+    color: #7dffad;
+    border: 1px solid rgba(33,197,93,.32);
+}
+
+.closed {
+    background: rgba(255,92,92,.12);
+    color: #ff8585;
+    border: 1px solid rgba(255,92,92,.32);
+}
+
+.fit-limited {
+    background: rgba(245,185,66,.12);
+    color: #ffd27d;
+    border: 1px solid rgba(245,185,66,.36);
+}
+
+.fit-unknown {
+    background: rgba(255,255,255,.06);
+    color: #c7cedd;
+    border: 1px solid rgba(255,255,255,.10);
+}
+
+.model {
+    font-weight: 850;
+    color: #fff;
+}
+
+.provider {
+    color: #cdd5e7;
+}
+
+.muted {
+    color: var(--muted2);
+}
+
+.score {
+    font-variant-numeric: tabular-nums;
+    color: #f4f6fb;
+}
+
+.footer {
+    margin-top: 16px;
+    color: var(--muted2);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.error {
+    color: #ffb0b0;
+    background: rgba(255,92,92,.10);
+    border: 1px solid rgba(255,92,92,.28);
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.74);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+}
+
+.modal {
+    width: min(1040px, 100%);
+    max-height: 88vh;
+    overflow: auto;
+    background:
+        linear-gradient(180deg, rgba(17,19,26,.98), rgba(8,9,12,.98));
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 28px;
+    box-shadow: 0 30px 140px rgba(0,0,0,.72), 0 0 0 1px rgba(255,46,46,.06);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 28px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.modal-title h2 {
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -.045em;
+    margin-bottom: 8px;
+    font-weight: 950;
+}
+
+.modal-title p {
+    color: var(--muted);
+    font-size: 13px;
+    word-break: break-all;
+}
+
+.close-btn,
+.heatmap-btn {
+    border: 1px solid var(--line2);
+    background: linear-gradient(180deg,#202432,#151823);
+    color: var(--text);
+    border-radius: 14px;
+    padding: 10px 13px;
+    cursor: pointer;
+    font-weight: 850;
+    box-shadow: 0 10px 30px rgba(0,0,0,.22);
+}
+
+.close-btn:hover,
+.heatmap-btn:hover {
+    border-color: rgba(255,46,46,.45);
+    color: #fff;
+}
+
+.modal-body {
+    padding: 28px;
+    display: grid;
+    gap: 20px;
+}
+
+.detail-section {
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(11,13,19,.82);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.detail-section h3 {
+    font-size: 13px;
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: .10em;
+    font-weight: 900;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.detail-item {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255,255,255,.055);
+}
+
+.detail-item:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,.055);
+}
+
+.detail-label {
+    color: var(--muted2);
+    font-size: 12px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 800;
+}
+
+.detail-value {
+    color: #edf1fa;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.heatmap-wrap {
+    overflow-x: auto;
+    padding: 16px;
+}
+
+.heatmap-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: separate;
+    border-spacing: 8px;
+}
+
+.heatmap-table th {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 6px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.heatmap-table td {
+    border: none;
+    padding: 13px 10px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 850;
+    font-variant-numeric: tabular-nums;
+}
+
+.heat-ok {
+    background: rgba(33,197,93,.15);
+    color: #7dffad;
+    border: 1px solid rgba(33,197,93,.34) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.heat-limited {
+    background: rgba(245,185,66,.14);
+    color: #ffd27d;
+    border: 1px solid rgba(245,185,66,.36) !important;
+}
+
+.heat-fail {
+    background: rgba(255,92,92,.13);
+    color: #ff8585;
+    border: 1px solid rgba(255,92,92,.34) !important;
+}
+
+.heat-unknown {
+    background: rgba(255,255,255,.045);
+    color: var(--muted2);
+    border: 1px solid rgba(255,255,255,.08) !important;
+}
+
+.heatmap-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0 16px 16px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.legend-ok { background: var(--green); }
+.legend-limited { background: var(--amber); }
+.legend-fail { background: var(--bad); }
+
+.heatmap-note {
+    color: var(--muted2);
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 0 16px 16px;
+}
+
+.heatmap-btn {
+    margin-left: 8px;
+    padding: 7px 9px;
+    font-size: 11px;
+    border-radius: 999px;
+    vertical-align: middle;
+}
+
+.fit-cell {
+    white-space: nowrap;
+}
+
+@media(max-width:1200px) {
+    .stats {
+        grid-template-columns: repeat(3,1fr);
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+    }
+}
+
+@media(max-width:760px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 26px 18px 44px;
+    }
+
+    th, td {
+        padding: 14px;
+        font-size: 12px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-item:nth-child(odd) {
+        border-right: none;
+    }
+
+    .topbar,
+    .sizing-controls {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .input {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+
+.workload-heatmap-panel {
+    display: none;
+    margin-top: 18px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(11,13,19,.72);
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.workload-heatmap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 18px 18px 0;
+}
+
+.workload-heatmap-header h3 {
+    font-size: 15px;
+    font-weight: 950;
+    letter-spacing: -.025em;
+}
+
+.workload-heatmap-header p {
+    color: var(--muted2);
+    font-size: 12px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+.workload-selection-summary {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: right;
+    line-height: 1.5;
+}
+
+.workload-selection-summary strong {
+    color: var(--text);
+}
+
+
+/* Compact users field in AI Workload Configuration */
+#concurrentUsersInput.users-compact {
+    width: 96px !important;
+    min-width: 96px !important;
+    max-width: 96px !important;
+    flex: 0 0 96px !important;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Keep mobile layout full-width */
+@media(max-width:760px) {
+    #concurrentUsersInput.users-compact {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        flex: 1 1 auto !important;
+    }
+}
+
+
+.users-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.users-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 13px;
+    opacity: .75;
+    pointer-events: none;
+}
+
+#concurrentUsersInput.with-icon {
+    padding-left: 34px !important;
+}
+
+
+.hero-note{
+    display:block;
+    margin-top:10px;
+    color:rgba(255,255,255,.62);
+    font-size:13px;
+    letter-spacing:.01em;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="hero">
+        <div>
+            <div class="eyebrow">Moreover.ai · Open Source AI Infrastructure Framework</div>
+            <h1>AI Infrastructure<br><span>Workload Sizing</span></h1>
+            <p>
+                Interactive AI infrastructure framework to evaluate how modern LLM workloads scale across GPU compute, VRAM capacity, context windows and inference concurrency.
+
+<span class="hero-note">Powered by realistic benchmark rankings and infrastructure-aware sizing.</span>
+            </p>
+            <div class="trust-badges">
+                <span class="trust-badge">No hallucinated sizing</span>
+                <span class="trust-badge">Official metadata first</span>
+                <span class="trust-badge">Transparent VRAM estimates</span>
+                <span class="trust-badge">Open-source methodology</span>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="error" id="errorBox"></div>
+
+    <div class="stats">
+        <div class="card">
+            <div class="label">Total Models</div>
+            <div class="value" id="modelsCount">-</div>
+        </div>
+
+        <div class="card">
+            <div class="label">Providers</div>
+            <div class="value" id="providersCount">-</div>
+        </div>
+
+        <div class="card">
+            <div class="label">Families</div>
+            <div class="value" id="familiesCount">-</div>
+        </div>
+
+        <div class="card">
+            <div class="label">Open Weight</div>
+            <div class="value" id="openWeightCount">-</div>
+        </div>
+
+        <div class="card">
+            <div class="label">With Benchmarks</div>
+            <div class="value" id="benchmarkCount">-</div>
+        </div>
+
+        <div class="card">
+            <div class="label">GPUs</div>
+            <div class="value" id="gpuCount">-</div>
+        </div>
+    </div>
+
+
+    <div class="sizing-panel">
+        <div class="sizing-header">
+            <div>
+                <h2>AI Infrastructure &amp; Inference Workload Sizing</h2>
+                <p>Define the workload and infrastructure constraints. The dashboard filters compatible models and exposes memory pressure through the heatmap.</p>
+            </div>
+        </div>
+
+        <div class="sizing-controls">
+            <select class="input" id="gpuSizingFilter">
+                <option value="">Select GPU</option>
+            </select>
+
+            <select class="input" id="quantizationFilter">
+                <option value="fp16">FP16 / BF16</option>
+                <option value="int8">INT8</option>
+                <option value="int4">INT4</option>
+            </select>
+
+            <select class="input context-field" id="useCaseFilter">
+                <option value="4096">Simple chatbot · Context 4k</option>
+                <option value="8192">RAG documents · Context 8k</option>
+                <option value="16384">Large RAG · Context 16k</option>
+                <option value="32768">Codebase · Context 32k</option>
+                <option value="65536">Agentic workflow · Context 64k</option>
+                <option value="131072">Long-context analysis · Context 128k</option>
+            </select>
+
+            <div class="users-input-wrap">
+                <span class="users-icon">👥</span>
+                <input
+                    class="input users-compact with-icon"
+                    id="concurrentUsersInput"
+                    type="number"
+                    min="1"
+                    step="1"
+                    value="1"
+                    placeholder="Users"
+                >
+            </div>
+
+            <select class="input" id="compatibilityFilter">
+                <option value="">Show all models</option>
+                <option value="compatible">Compatible only</option>
+                <option value="comfortable">Comfortable only</option>
+                <option value="limited">Limited only</option>
+            </select>
+
+            <select class="input" id="compatibleModelFilter">
+                <option value="">Select compatible model</option>
+            </select>
+        </div>
+
+        <div class="sizing-note">
+            Comfortable = estimated VRAM ≤ 80% of GPU VRAM. Limited = estimated VRAM ≤ 95% of GPU VRAM. Concurrent users multiply KV cache, not model weights.
+        </div>
+
+        
+
+        <div class="workload-heatmap-panel" id="workloadHeatmapPanel">
+            <div class="workload-heatmap-header">
+                <div>
+                    <h3>Infrastructure Capacity Heatmap</h3>
+                    <p>Memory pressure across context size and concurrent users for the selected model and GPU.</p>
+                </div>
+                <div class="workload-selection-summary" id="workloadHeatmapSummary"></div>
+            </div>
+            <div id="workloadHeatmapBody"></div>
+        </div>
+    </div>
+
+    <div class="topbar">
+        <input class="input" id="search" placeholder="Search compatible models...">
+
+        <select class="input" id="providerFilter">
+            <option value="">All providers</option>
+        </select>
+
+        <select class="input" id="familyFilter">
+            <option value="">All families</option>
+        </select>
+
+        <select class="input" id="openFilter">
+            <option value="">All types</option>
+            <option value="true">Open Weight</option>
+            <option value="false">Closed</option>
+        </select>
+
+        <select class="input" id="benchmarkFilter">
+            <option value="">All benchmark status</option>
+            <option value="true">With raw benchmark</option>
+            <option value="false">Without raw benchmark</option>
+        </select>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Model Name</th>
+                    <th>Provider</th>
+                    <th>Family</th>
+                    <th>Parameters</th>
+                    <th>Context</th>
+                    <th>Availability</th>
+                    <th>Infrastructure Fit</th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        Click a model for architecture, benchmark and memory details. Select a compatible model in the workload panel to display the heatmap, or use Map from the table.
+    </div>
+
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">
+                <h2 id="modalTitle"></h2>
+                <p id="modalSubtitle"></p>
+            </div>
+            <button class="close-btn" id="closeModal">Close</button>
+        </div>
+
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="heatmapBackdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">
+                <h2 id="heatmapTitle">Infrastructure heatmap</h2>
+                <p id="heatmapSubtitle"></p>
+            </div>
+            <button class="close-btn" id="closeHeatmapModal">Close</button>
+        </div>
+
+        <div class="modal-body" id="heatmapBody"></div>
+    </div>
+</div>
+
+<script>
+let GPU_LIST = [];
+
+let DATA = [];
+
+const benchmarkColumns = [
+    "benchmark_ifeval_raw",
+    "benchmark_bbh_raw",
+    "benchmark_math_lvl_5_raw",
+    "benchmark_gpqa_raw",
+    "benchmark_musr_raw",
+    "benchmark_mmlu_pro_raw"
+];
+
+const tableBody = document.getElementById("tableBody");
+const providerFilter = document.getElementById("providerFilter");
+const familyFilter = document.getElementById("familyFilter");
+const openFilter = document.getElementById("openFilter");
+const benchmarkFilter = document.getElementById("benchmarkFilter");
+const gpuSizingFilter = document.getElementById("gpuSizingFilter");
+const quantizationFilter = document.getElementById("quantizationFilter");
+const useCaseFilter = document.getElementById("useCaseFilter");
+const concurrentUsersInput = document.getElementById("concurrentUsersInput");
+const compatibilityFilter = document.getElementById("compatibilityFilter");
+const compatibleModelFilter = document.getElementById("compatibleModelFilter");
+const workloadHeatmapPanel = document.getElementById("workloadHeatmapPanel");
+const workloadHeatmapBody = document.getElementById("workloadHeatmapBody");
+const workloadHeatmapSummary = document.getElementById("workloadHeatmapSummary");
+const searchInput = document.getElementById("search");
+const statusEl = document.getElementById("status");
+const errorBox = document.getElementById("errorBox");
+
+const modalBackdrop = document.getElementById("modalBackdrop");
+const modalTitle = document.getElementById("modalTitle");
+const modalSubtitle = document.getElementById("modalSubtitle");
+const modalBody = document.getElementById("modalBody");
+const closeModal = document.getElementById("closeModal");
+
+const heatmapBackdrop = document.getElementById("heatmapBackdrop");
+const heatmapTitle = document.getElementById("heatmapTitle");
+const heatmapSubtitle = document.getElementById("heatmapSubtitle");
+const heatmapBody = document.getElementById("heatmapBody");
+const closeHeatmapModal = document.getElementById("closeHeatmapModal");
+
+function isEmptyValue(value) {
+    return value === null || value === undefined || value === "" || Number.isNaN(value);
+}
+
+function formatNumber(value, decimals = 2) {
+    if (isEmptyValue(value)) return null;
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+        return String(value);
+    }
+
+    return number.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: decimals
+    });
+}
+
+function formatCompactNumber(value) {
+    if (isEmptyValue(value)) return null;
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+        return String(value);
+    }
+
+    return number.toLocaleString("en-US", {
+        maximumFractionDigits: 0
+    });
+}
+
+function formatGb(value) {
+    if (isEmptyValue(value)) return null;
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+        return String(value);
+    }
+
+    return `${number.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 1
+    })} GB`;
+}
+
+function formatMb(value) {
+    if (isEmptyValue(value)) return null;
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+        return String(value);
+    }
+
+    return `${number.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    })} MB`;
+}
+
+function formatBytes(value) {
+    if (isEmptyValue(value)) return null;
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+        return String(value);
+    }
+
+    return number.toLocaleString("en-US", {
+        maximumFractionDigits: 0
+    });
+}
+
+function valueOrDash(value) {
+    if (isEmptyValue(value)) {
+        return '<span class="muted">-</span>';
+    }
+
+    return String(value);
+}
+
+function numberOrDash(value, decimals = 2) {
+    const formatted = formatNumber(value, decimals);
+
+    if (formatted === null) {
+        return '<span class="muted">-</span>';
+    }
+
+    return formatted;
+}
+
+function scoreOrDash(value) {
+    const formatted = formatNumber(value, 2);
+
+    if (formatted === null) {
+        return '<span class="muted">-</span>';
+    }
+
+    return `<span class="score">${formatted}</span>`;
+}
+
+function hasBenchmark(row) {
+    return benchmarkColumns.some(col => {
+        const value = row[col];
+        return value !== null && value !== undefined && value !== "" && !Number.isNaN(value);
+    });
+}
+
+function uniqueValues(key) {
+    return [...new Set(DATA.map(d => d[key]).filter(Boolean))].sort();
+}
+
+
+function populateGpuFilter() {
+    gpuSizingFilter.innerHTML = '<option value="">Select GPU</option>';
+
+    const grouped = {};
+
+    GPU_LIST
+        .map((gpu, index) => ({ ...gpu, __index: index }))
+        .sort((a, b) => {
+            const vendorCompare = String(a.vendor || "").localeCompare(String(b.vendor || ""));
+            if (vendorCompare !== 0) return vendorCompare;
+
+            const categoryCompare = String(a.category || "").localeCompare(String(b.category || ""));
+            if (categoryCompare !== 0) return categoryCompare;
+
+            return Number(a.memory_gb || 0) - Number(b.memory_gb || 0);
+        })
+        .forEach(gpu => {
+            const vendor = gpu.vendor || "Other";
+            const category = gpu.category || "Other";
+
+            if (!grouped[vendor]) grouped[vendor] = {};
+            if (!grouped[vendor][category]) grouped[vendor][category] = [];
+
+            grouped[vendor][category].push(gpu);
+        });
+
+    Object.keys(grouped).forEach(vendor => {
+        Object.keys(grouped[vendor]).forEach(category => {
+
+            const optgroup = document.createElement("optgroup");
+            optgroup.label = `${vendor} — ${category}`;
+
+            grouped[vendor][category].forEach(gpu => {
+                const option = document.createElement("option");
+
+                option.value = gpu.__index;
+
+                option.textContent =
+                    `${gpu.gpu_name} · ${gpu.memory_gb}GB`;
+
+                optgroup.appendChild(option);
+            });
+
+            gpuSizingFilter.appendChild(optgroup);
+        });
+    });
+}
+
+function getSelectedGpu() {
+    const gpuIndex = gpuSizingFilter.value;
+    if (gpuIndex === "") return null;
+
+    return GPU_LIST[Number(gpuIndex)] || null;
+}
+
+function autoEnableCompatibilityFilter() {
+    if (getSelectedGpu() && compatibilityFilter.value === "") {
+        compatibilityFilter.value = "compatible";
+    }
+}
+
+function getContextTokens() {
+    const value = Number(useCaseFilter.value);
+
+    if (!value || Number.isNaN(value) || value < 1) {
+        return 4096;
+    }
+
+    return Math.round(value);
+}
+
+function getSelectedUseCaseLabel() {
+    const option = useCaseFilter.options[useCaseFilter.selectedIndex];
+
+    if (!option) return "Simple chatbot · Context 4k";
+
+    return option.textContent;
+}
+
+function getConcurrentUsers() {
+    const value = Number(concurrentUsersInput.value);
+
+    if (!value || Number.isNaN(value) || value < 1) {
+        return 1;
+    }
+
+    return Math.round(value);
+}
+
+function getWeightMemoryGb(row) {
+    const quant = quantizationFilter.value || "fp16";
+
+    if (quant === "fp16") return Number(row.weight_memory_fp16_gb);
+    if (quant === "int8") return Number(row.weight_memory_int8_gb);
+    if (quant === "int4") return Number(row.weight_memory_int4_gb);
+
+    return null;
+}
+
+function getEstimatedVramGbFor(row, contextTokens, concurrentUsers) {
+    const weightMemory = getWeightMemoryGb(row);
+    const kvBytesPerToken = Number(row.kv_cache_bytes_per_token_fp16);
+
+    if (!weightMemory || Number.isNaN(weightMemory)) return null;
+    if (!kvBytesPerToken || Number.isNaN(kvBytesPerToken)) return null;
+
+    const kvGb = (kvBytesPerToken * contextTokens * concurrentUsers) / 1_000_000_000;
+
+    // Same assumption as V6: 20% runtime overhead.
+    return Math.round((weightMemory + kvGb) * 1.2 * 1000) / 1000;
+}
+
+function getEstimatedVramGb(row) {
+    return getEstimatedVramGbFor(row, getContextTokens(), getConcurrentUsers());
+}
+
+function getFitStatus(row) {
+    const gpu = getSelectedGpu();
+
+    if (!gpu) {
+        return {
+            status: "unknown",
+            label: "Select GPU",
+            estimated: null,
+            gpuMemory: null
+        };
+    }
+
+    const estimated = getEstimatedVramGb(row);
+    const gpuMemory = Number(gpu.memory_gb);
+
+    if (!estimated || Number.isNaN(estimated) || !gpuMemory || Number.isNaN(gpuMemory)) {
+        return {
+            status: "unknown",
+            label: "No estimate",
+            estimated: null,
+            gpuMemory
+        };
+    }
+
+    const ratio = estimated / gpuMemory;
+
+    if (ratio <= 0.80) {
+        return {
+            status: "comfortable",
+            label: `${formatNumber(estimated, 1)}GB / ${formatNumber(gpuMemory, 0)}GB`,
+            estimated,
+            gpuMemory
+        };
+    }
+
+    if (ratio <= 0.95) {
+        return {
+            status: "limited",
+            label: `${formatNumber(estimated, 1)}GB / ${formatNumber(gpuMemory, 0)}GB`,
+            estimated,
+            gpuMemory
+        };
+    }
+
+    return {
+        status: "not_compatible",
+        label: `${formatNumber(estimated, 1)}GB / ${formatNumber(gpuMemory, 0)}GB`,
+        estimated,
+        gpuMemory
+    };
+}
+
+function fitBadge(row) {
+    const fit = getFitStatus(row);
+
+    if (fit.status === "comfortable") {
+        return `<span class="fit-badge fit-ok">Comfortable</span>`;
+    }
+
+    if (fit.status === "limited") {
+        return `<span class="fit-badge fit-limited">Limited</span>`;
+    }
+
+    if (fit.status === "not_compatible") {
+        return `<span class="muted">Not enough VRAM</span>`;
+    }
+
+    return `<span class="fit-badge fit-unknown">${fit.label}</span>`;
+}
+
+function matchCompatibility(row) {
+    const selected = compatibilityFilter.value;
+    const gpu = getSelectedGpu();
+
+    // Without GPU selected, do not filter by sizing.
+    if (!gpu) return true;
+
+    if (!selected) return true;
+
+    const fit = getFitStatus(row);
+
+    if (selected === "compatible") {
+        return fit.status === "comfortable" || fit.status === "limited";
+    }
+
+    return fit.status === selected;
+}
+
+function escapeHtml(value) {
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+function populateFilters() {
+    providerFilter.innerHTML = '<option value="">All providers</option>';
+    familyFilter.innerHTML = '<option value="">All families</option>';
+
+    uniqueValues("provider").forEach(v => {
+        providerFilter.innerHTML += `<option value="${v}">${v}</option>`;
+    });
+
+    uniqueValues("family").forEach(v => {
+        familyFilter.innerHTML += `<option value="${v}">${v}</option>`;
+    });
+}
+
+function updateStats() {
+    document.getElementById("modelsCount").innerText = DATA.length;
+    document.getElementById("providersCount").innerText = uniqueValues("provider").length;
+    document.getElementById("familiesCount").innerText = uniqueValues("family").length;
+    document.getElementById("openWeightCount").innerText = DATA.filter(d => d.open_weight === true).length;
+    document.getElementById("benchmarkCount").innerText = DATA.filter(hasBenchmark).length;
+    document.getElementById("gpuCount").innerText = GPU_LIST.length;
+}
+
+
+function getFilteredModels() {
+    const search = searchInput.value.toLowerCase();
+    const provider = providerFilter.value;
+    const family = familyFilter.value;
+    const open = openFilter.value;
+    const benchmark = benchmarkFilter.value;
+
+    return DATA.filter(d => {
+        const text = JSON.stringify(d).toLowerCase();
+
+        const matchSearch = text.includes(search);
+        const matchProvider = !provider || d.provider === provider;
+        const matchFamily = !family || d.family === family;
+        const matchOpen = !open || String(d.open_weight) === open;
+        const matchBenchmark = !benchmark || String(hasBenchmark(d)) === benchmark;
+        const matchSizing = matchCompatibility(d);
+
+        return matchSearch && matchProvider && matchFamily && matchOpen && matchBenchmark && matchSizing;
+    });
+}
+
+function populateCompatibleModelFilter(filteredModels) {
+    const currentValue = compatibleModelFilter.value;
+
+    compatibleModelFilter.innerHTML = '<option value="">Select compatible model</option>';
+
+    filteredModels.forEach(model => {
+        const option = document.createElement("option");
+        option.value = model.model_id;
+        option.textContent = `${model.display_name || model.model_id} · ${model.parameters || "Unknown params"}`;
+        compatibleModelFilter.appendChild(option);
+    });
+
+    const stillExists = filteredModels.some(model => model.model_id === currentValue);
+
+    if (stillExists) {
+        compatibleModelFilter.value = currentValue;
+    } else {
+        compatibleModelFilter.value = "";
+    }
+}
+
+function renderSelectedWorkloadHeatmap() {
+    const selectedModelId = compatibleModelFilter.value;
+
+    if (!selectedModelId) {
+        workloadHeatmapPanel.style.display = "none";
+        workloadHeatmapBody.innerHTML = "";
+        workloadHeatmapSummary.innerHTML = "";
+        return;
+    }
+
+    const model = DATA.find(d => d.model_id === selectedModelId);
+
+    if (!model) {
+        workloadHeatmapPanel.style.display = "none";
+        return;
+    }
+
+    const gpu = getSelectedGpu();
+    const gpuLabel = gpu ? `${gpu.gpu_name} · ${gpu.memory_gb}GB` : "No GPU selected";
+
+    workloadHeatmapSummary.innerHTML = `
+        <strong>${escapeHtml(model.display_name || model.model_id)}</strong><br>
+        ${escapeHtml(gpuLabel)} · ${(quantizationFilter.value || "fp16").toUpperCase()}<br>
+        ${escapeHtml(getSelectedUseCaseLabel())}
+    `;
+
+    workloadHeatmapBody.innerHTML = renderInfraHeatmap(model);
+    workloadHeatmapPanel.style.display = "block";
+}
+
+function render() {
+    const filtered = getFilteredModels();
+
+    populateCompatibleModelFilter(filtered);
+
+    tableBody.innerHTML = filtered.map((d) => `
+        <tr>
+            <td class="model clickable-model" onclick="openModelModal('${escapeForAttr(d.model_id)}')">${valueOrDash(d.display_name)}</td>
+            <td class="provider">${valueOrDash(d.provider)}</td>
+            <td>${valueOrDash(d.family)}</td>
+            <td>${valueOrDash(d.parameters)}</td>
+            <td>${numberOrDash(d.context, 0)}</td>
+            <td>
+                <span class="badge ${d.open_weight ? "open" : "closed"}">
+                    ${d.open_weight ? "Open Weight" : "Closed"}
+                </span>
+            </td>
+            <td class="fit-cell">
+                ${fitBadge(d)}
+                <button class="heatmap-btn" onclick="event.stopPropagation(); openHeatmapModal('${escapeForAttr(d.model_id)}')">Map</button>
+            </td>
+        </tr>
+    `).join("");
+
+    renderSelectedWorkloadHeatmap();
+}
+
+function escapeForAttr(value) {
+    return String(value || "").replace(/'/g, "\\'");
+}
+
+function formatDetailValue(label, value) {
+    if (isEmptyValue(value)) {
+        return '<span class="muted">-</span>';
+    }
+
+    const lower = String(label).toLowerCase();
+
+    if (
+        lower.includes("benchmark") ||
+        lower.includes("ifeval") ||
+        lower.includes("bbh") ||
+        lower.includes("math") ||
+        lower.includes("gpqa") ||
+        lower.includes("musr") ||
+        lower.includes("mmlu")
+    ) {
+        return scoreOrDash(value);
+    }
+
+    if (lower.includes("gb") || lower.includes("vram") || lower.includes("weight")) {
+        const formatted = formatGb(value);
+        return formatted === null ? valueOrDash(value) : formatted;
+    }
+
+    if (lower.includes("mb/token")) {
+        const formatted = formatMb(value);
+        return formatted === null ? valueOrDash(value) : formatted;
+    }
+
+    if (lower.includes("bytes/token")) {
+        const formatted = formatBytes(value);
+        return formatted === null ? valueOrDash(value) : formatted;
+    }
+
+    if (
+        lower.includes("context") ||
+        lower.includes("hidden size") ||
+        lower.includes("layers") ||
+        lower.includes("heads") ||
+        lower.includes("vocab") ||
+        lower.includes("intermediate") ||
+        lower.includes("position") ||
+        lower.includes("theta")
+    ) {
+        const formatted = formatCompactNumber(value);
+        return formatted === null ? valueOrDash(value) : formatted;
+    }
+
+    if (lower.includes("parameters b")) {
+        const formatted = formatNumber(value, 2);
+        return formatted === null ? valueOrDash(value) : formatted;
+    }
+
+    return valueOrDash(value);
+}
+
+function detailItem(label, value) {
+    return `
+        <div class="detail-item">
+            <div class="detail-label">${label}</div>
+            <div class="detail-value">${formatDetailValue(label, value)}</div>
+        </div>
+    `;
+}
+
+function section(title, items) {
+    return `
+        <div class="detail-section">
+            <h3>${title}</h3>
+            <div class="detail-grid">
+                ${items.join("")}
+            </div>
+        </div>
+    `;
+}
+
+
+
+function getHeatmapCell(row, contextTokens, users) {
+    const gpu = getSelectedGpu();
+
+    if (!gpu) {
+        return {
+            className: "heat-unknown",
+            label: "Select GPU",
+            title: ""
+        };
+    }
+
+    const estimated = getEstimatedVramGbFor(row, contextTokens, users);
+    const gpuMemory = Number(gpu.memory_gb);
+
+    if (!estimated || Number.isNaN(estimated) || !gpuMemory || Number.isNaN(gpuMemory)) {
+        return {
+            className: "heat-unknown",
+            label: "-",
+            title: "Not enough model metadata"
+        };
+    }
+
+    const ratio = estimated / gpuMemory;
+
+    if (ratio <= 0.80) {
+        return {
+            className: "heat-ok",
+            label: `${formatNumber(estimated, 1)}GB`,
+            title: "Comfortable"
+        };
+    }
+
+    if (ratio <= 0.95) {
+        return {
+            className: "heat-limited",
+            label: `${formatNumber(estimated, 1)}GB`,
+            title: "Limited"
+        };
+    }
+
+    return {
+        className: "heat-fail",
+        label: `${formatNumber(estimated, 1)}GB`,
+        title: "Insufficient"
+    };
+}
+
+function renderInfraHeatmap(model) {
+    const contextValues = [4096, 8192, 16384, 32768, 65536];
+    const userValues = [1, 2, 4, 8, 16, 32, 64];
+
+    const gpu = getSelectedGpu();
+    const gpuLabel = gpu ? `${gpu.gpu_name} · ${gpu.memory_gb}GB` : "No GPU selected";
+
+    const rows = userValues.map(users => {
+        const cells = contextValues.map(contextTokens => {
+            const cell = getHeatmapCell(model, contextTokens, users);
+
+            return `
+                <td class="${cell.className}" title="${cell.title}">
+                    ${cell.label}
+                </td>
+            `;
+        }).join("");
+
+        return `
+            <tr>
+                <th>${users} user${users > 1 ? "s" : ""}</th>
+                ${cells}
+            </tr>
+        `;
+    }).join("");
+
+    return `
+        <div class="detail-section">
+            <h3>Memory fit by context size and concurrent users</h3>
+
+            <div class="heatmap-wrap">
+                <table class="heatmap-table">
+                    <thead>
+                        <tr>
+                            <th>Users \\ Context</th>
+                            <th>4k</th>
+                            <th>8k</th>
+                            <th>16k</th>
+                            <th>32k</th>
+                            <th>64k</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="heatmap-legend">
+                <span><span class="legend-dot legend-ok"></span>Comfortable ≤ 80% VRAM</span>
+                <span><span class="legend-dot legend-limited"></span>Limited ≤ 95% VRAM</span>
+                <span><span class="legend-dot legend-fail"></span>Insufficient &gt; 95% VRAM</span>
+            </div>
+
+            <div class="heatmap-note">
+                Each cell shows estimated VRAM for the selected model, quantization, context size and concurrent users.
+                This checks memory fit only, not tokens/sec throughput.
+            </div>
+        </div>
+    `;
+}
+
+function gpuRegistrySummaryItems() {
+    const vendors = [...new Set(GPU_LIST.map(g => g.vendor).filter(Boolean))].join(", ");
+    const categories = [...new Set(GPU_LIST.map(g => g.category).filter(Boolean))].join(", ");
+    const memories = GPU_LIST.map(g => Number(g.memory_gb)).filter(v => !Number.isNaN(v));
+    const minMemory = memories.length ? Math.min(...memories) + " GB" : null;
+    const maxMemory = memories.length ? Math.max(...memories) + " GB" : null;
+
+    return [
+        detailItem("GPU entries", GPU_LIST.length),
+        detailItem("Vendors", vendors),
+        detailItem("Categories", categories),
+        detailItem("VRAM range", minMemory && maxMemory ? `${minMemory} → ${maxMemory}` : null),
+    ];
+}
+
+
+function openHeatmapModal(modelId) {
+    const model = DATA.find(d => d.model_id === modelId);
+
+    if (!model) return;
+
+    const gpu = getSelectedGpu();
+    const gpuLabel = gpu ? `${gpu.gpu_name} · ${gpu.memory_gb}GB` : "No GPU selected";
+
+    heatmapTitle.innerText = model.display_name || model.model_id || "Infrastructure heatmap";
+    heatmapSubtitle.innerText = `${gpuLabel} · ${(quantizationFilter.value || "fp16").toUpperCase()}`;
+
+    heatmapBody.innerHTML = renderInfraHeatmap(model);
+
+    heatmapBackdrop.style.display = "flex";
+}
+
+function openModelModal(modelId) {
+    const model = DATA.find(d => d.model_id === modelId);
+
+    if (!model) return;
+
+    modalTitle.innerText = model.display_name || model.model_id || "Model";
+    modalSubtitle.innerText = model.model_id || "";
+
+    modalBody.innerHTML = [
+        section("Overview", [
+            detailItem("Provider", model.provider),
+            detailItem("Family", model.family),
+            detailItem("Open weight", model.open_weight ? "Yes" : "No"),
+            detailItem("Parameters", model.parameters),
+            detailItem("Context", model.context),
+            detailItem("Model type", model.model_type),
+            detailItem("Selected GPU fit", getFitStatus(model).status),
+            detailItem("Selected GPU estimate", getFitStatus(model).label),
+            detailItem("Selected context tokens", getContextTokens()),
+            detailItem("Concurrent users", getConcurrentUsers()),
+        ]),
+
+        section("Raw Benchmarks", [
+            detailItem("IFEval", model.benchmark_ifeval_raw),
+            detailItem("BBH", model.benchmark_bbh_raw),
+            detailItem("MATH Lvl 5", model.benchmark_math_lvl_5_raw),
+            detailItem("GPQA", model.benchmark_gpqa_raw),
+            detailItem("MUSR", model.benchmark_musr_raw),
+            detailItem("MMLU-PRO", model.benchmark_mmlu_pro_raw),
+        ]),
+
+        section("Architecture from config.json", [
+            detailItem("Architectures", model.architectures),
+            detailItem("Torch dtype", model.torch_dtype),
+            detailItem("Hidden size", model.hidden_size),
+            detailItem("Layers", model.num_hidden_layers),
+            detailItem("Attention heads", model.num_attention_heads),
+            detailItem("KV heads", model.num_key_value_heads),
+            detailItem("Intermediate size", model.intermediate_size),
+            detailItem("Vocab size", model.vocab_size),
+            detailItem("Max position embeddings", model.max_position_embeddings),
+            detailItem("Sliding window", model.sliding_window),
+            detailItem("Rope scaling", model.rope_scaling),
+            detailItem("Rope theta", model.rope_theta),
+        ]),
+
+        section("Memory estimates", [
+            detailItem("Parameters B", model.parameters_b),
+            detailItem("Weights FP16/BF16 GB", model.weight_memory_fp16_gb),
+            detailItem("Weights INT8 GB", model.weight_memory_int8_gb),
+            detailItem("Weights INT4 GB", model.weight_memory_int4_gb),
+            detailItem("KV cache bytes/token FP16", model.kv_cache_bytes_per_token_fp16),
+            detailItem("KV cache MB/token FP16", model.kv_cache_mb_per_token_fp16),
+        ]),
+
+        section("Current What can I run selection", [
+            detailItem("Selected GPU", getSelectedGpu() ? `${getSelectedGpu().gpu_name} · ${getSelectedGpu().memory_gb}GB` : null),
+            detailItem("Quantization", quantizationFilter.value ? quantizationFilter.value.toUpperCase() : null),
+            detailItem("Context tokens", getContextTokens()),
+            detailItem("Concurrent users", getConcurrentUsers()),
+            detailItem("Estimated VRAM GB", getEstimatedVramGb(model)),
+            detailItem("Fit status", getFitStatus(model).status),
+        ]),
+
+        section("Reference VRAM estimates, 20% overhead included", [
+            detailItem("FP16 @ 4k context", model.estimated_vram_fp16_context_4096_gb),
+            detailItem("FP16 @ 8k context", model.estimated_vram_fp16_context_8192_gb),
+            detailItem("FP16 @ 32k context", model.estimated_vram_fp16_context_32768_gb),
+            detailItem("INT8 @ 4k context", model.estimated_vram_int8_context_4096_gb),
+            detailItem("INT8 @ 8k context", model.estimated_vram_int8_context_8192_gb),
+            detailItem("INT8 @ 32k context", model.estimated_vram_int8_context_32768_gb),
+            detailItem("INT4 @ 4k context", model.estimated_vram_int4_context_4096_gb),
+            detailItem("INT4 @ 8k context", model.estimated_vram_int4_context_8192_gb),
+            detailItem("INT4 @ 32k context", model.estimated_vram_int4_context_32768_gb),
+        ]),
+    ].join("");
+
+    modalBackdrop.style.display = "flex";
+}
+
+function initDashboard(data) {
+    DATA = data;
+
+    populateFilters();
+    populateGpuFilter();
+    updateStats();
+    render();
+
+
+
+    searchInput.addEventListener("input", render);
+    providerFilter.addEventListener("change", render);
+    familyFilter.addEventListener("change", render);
+    openFilter.addEventListener("change", render);
+    benchmarkFilter.addEventListener("change", render);
+    gpuSizingFilter.addEventListener("change", () => {
+        autoEnableCompatibilityFilter();
+        render();
+    });
+    quantizationFilter.addEventListener("change", render);
+    useCaseFilter.addEventListener("change", render);
+    concurrentUsersInput.addEventListener("input", render);
+    compatibilityFilter.addEventListener("change", render);
+    compatibleModelFilter.addEventListener("change", renderSelectedWorkloadHeatmap);
+}
+
+closeModal.addEventListener("click", () => {
+    modalBackdrop.style.display = "none";
+});
+
+modalBackdrop.addEventListener("click", (event) => {
+    if (event.target === modalBackdrop) {
+        modalBackdrop.style.display = "none";
+    }
+});
+
+closeHeatmapModal.addEventListener("click", () => {
+    heatmapBackdrop.style.display = "none";
+});
+
+heatmapBackdrop.addEventListener("click", (event) => {
+    if (event.target === heatmapBackdrop) {
+        heatmapBackdrop.style.display = "none";
+    }
+});
+
+Promise.all([
+    fetch("models.json").then(response => {
+        if (!response.ok) {
+            throw new Error("models.json not found. Make sure it is in the same folder as index.html.");
+        }
+        return response.json();
+    }),
+    fetch("gpu_registry.json").then(response => {
+        if (!response.ok) {
+            throw new Error("gpu_registry.json not found. Make sure it is in the same folder as index.html.");
+        }
+        return response.json();
+    })
+])
+    .then(([modelsData, gpuData]) => {
+        if (!Array.isArray(modelsData)) {
+            throw new Error("models.json must contain a JSON array.");
+        }
+
+        if (!Array.isArray(gpuData)) {
+            throw new Error("gpu_registry.json must contain a JSON array.");
+        }
+
+        GPU_LIST = gpuData;
+        initDashboard(modelsData);
+    })
+    .catch(error => {
+        errorBox.style.display = "block";
+        errorBox.innerText = error.message + " Run: python3 -m http.server 8000 and open http://localhost:8000";
+    });
+</script>
+
+</body>
+</html>
